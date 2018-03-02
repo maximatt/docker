@@ -1,5 +1,4 @@
 FROM centos:7
-MAINTAINER "Maximiliano de Mattos" <azamax@gmail.com>
 ENV container docker
 
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
