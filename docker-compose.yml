@@ -4,7 +4,7 @@ services:
     base:
         build:
             context: ./base
-        image: centos:7
+        image: base:1.0
         hostname: base.maximatt.org
         container_name: base
         security_opt:
@@ -17,6 +17,26 @@ services:
             - /tmp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    httpd-front:
+        build:
+            context: ./httpd
+        image: httpd-front:1.0
+        hostname: httpd-front.maximatt.org
+        container_name: httpd-front
+        security_opt:
+            - seccomp:unconfined
+        ports:
+            - 80:80
+        networks:
+            maximatt-net:
+                ipv4_address: 172.28.0.101
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./httpd/config/proxy.conf:/etc/httpd/conf.d/proxy.conf
 
 networks:
   maximatt-net:
