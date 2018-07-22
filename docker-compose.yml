@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+    base:
+        build:
+            context: ./base
+        image: centos:7
+        hostname: base.maximatt.org
+        container_name: base
+        security_opt:
+            - seccomp:unconfined
+        networks:
+            maximatt-net:
+                ipv4_address: 172.28.0.100
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+networks:
+  maximatt-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/24
