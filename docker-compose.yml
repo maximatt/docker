@@ -31,12 +31,39 @@ services:
         networks:
             maximatt-net:
                 ipv4_address: 172.28.0.101
+        depends_on:
+            - trac
+        links:
+            - "trac:trac.maximatt.org"
         tmpfs:
             - /run
             - /tmp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup:ro
             - ./httpd/config/proxy.conf:/etc/httpd/conf.d/proxy.conf
+
+    trac:
+        build:
+            context: ./trac
+        image: trac:1.0
+        hostname: trac.maximatt.org
+        container_name: trac
+        security_opt:
+            - seccomp:unconfined
+        ports:
+            - 5002:80
+        networks:
+            maximatt-net:
+                ipv4_address: 172.28.0.102
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./trac/repository:/home/trac/repository
+        environment:
+            TRAC_USER: tuser
+            TRAC_PASSWORD: tpass
 
 networks:
   maximatt-net:
