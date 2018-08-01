@@ -1,4 +1,13 @@
 #!/bin/bash
+#
+# Autor:
+#   Maximiliano de Mattos (azamax@gmail.com)
+#
+# Description:
+#   Script that runs as entry point for docker Trac. 
+#   Create new Trac projects on empty directories at /home/trac
+#   Update Trac projects on non empty directories at /home/trac
+#
 
 set -e
 

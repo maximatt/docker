@@ -1,5 +1,6 @@
 FROM centos:7
 ENV container docker
+LABEL maintainer="azamax@gmail.com"
 
 RUN cd /lib/systemd/system/sysinit.target.wants/; \
     for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done; \

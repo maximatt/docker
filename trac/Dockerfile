@@ -1,6 +1,7 @@
 FROM maximatt/httpd-front:1.0
-
 ENV container docker
+LABEL maintainer="azamax@gmail.com"
+
 WORKDIR /home/trac
 
 ADD ./config/trac.wsgi /home/trac/trac.wsgi

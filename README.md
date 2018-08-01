@@ -1,13 +1,13 @@
 # docker
-docker images definitions
+Docker images definitions.
 
 ## Base
 
-Base image for other projects.
+Base image for other projects based on CentOS 7.
 
 ## HTTP-Front
 
-Frontend for other projects based on HTTP Apache server.
+Frontend based on HTTP Apache server.
 
 Proxy definitions on `httpd/config/proxy.conf`.
 
@@ -15,13 +15,11 @@ Proxy definitions on `httpd/config/proxy.conf`.
 
 [Trac](https://trac.edgewall.org/) is a wiki and issue tracking system for software development projects.
 
-This projetc enable the posibility to manage multiprojects.
+This project enable the possibility to manage multiprojects.
 
-All projects are under `/home/trac/repository`. Each folder under this directory is considerated as an Trac project.
+All projects are under `/home/trac/repository`; each folder under this directory is considerated as a Trac project; and all of them are updated to the installed version of Trac.
 
-A exisiting project is updated to the installed version of trac.
-
-Empty folders, are considerated as Trac project to create ant they are created when the container stars.
+Empty folders, are considerated as Trac project to create and they are created when the container starts.
 
 All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD` (environment variables).
 
@@ -29,3 +27,9 @@ All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD`
 
  - TRAC_USER: user to trac projects.
  - TRAC_PASSWORD: password to trac projects.
+
+## Pendings
+ - Parametrize Trac config values 
+ - Add SVN and Git as repositories
+ - Email configuration
+ - Add tools to backup trac, export wiki content as PDF, and others
