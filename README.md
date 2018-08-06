@@ -5,7 +5,7 @@ Docker images definitions.
 
 Base image for other projects based on CentOS 7.
 
-## i386 Base
+## Base i386
 
 Build a docker base image from scratch (based on Centos 7 i386)
 
