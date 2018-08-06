@@ -5,6 +5,14 @@ Docker images definitions.
 
 Base image for other projects based on CentOS 7.
 
+## i386 Base
+
+Build a docker base image from scratch (based on Centos 7 i386)
+
+There are two scripts:
+ - `mkImageYum.sh`: to be used under hosts with Yum package manager.
+ - `mkImageDNF.sh`: to be used under hosts with DNF package manager.
+ 
 ## HTTP-Front
 
 Frontend based on HTTP Apache server.
