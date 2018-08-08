@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+    
+    tor-service:
+        build:
+            context: .
+            dockerfile: service.docker
+            args:
+              - TOR_VERSION=0.3.3.9
+              - HIDDEN_SERVICE_PORT=80
+              - HIDDEN_SERVICE_VERSION=3
+              - TOR_SITE_URI=tor-site:80
+        image: tor-service:1.0
+        hostname: tor.service.anonymous.org
+        container_name: tor-service
+        networks:
+            tor-net:
+                ipv4_address: 172.172.0.171
+        ports:
+            - 80:80
+        depends_on:
+            - tor-site
+        links:
+            - tor-site
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    tor-site:
+        image: nginx
+        networks:
+            tor-net:
+                ipv4_address: 172.172.0.172
+        ports:
+          - 8080:80
+
+networks:
+  tor-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.172.0.0/24

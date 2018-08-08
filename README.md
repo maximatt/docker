@@ -1,11 +1,11 @@
-# docker
-Docker images definitions.
+# Docker
+Docker definitions for some projects to learn and research.
 
 ## Base
 
 Base image for other projects based on CentOS 7.
 
-## i386 Base
+## Base i386
 
 Build a docker base image from scratch (based on Centos 7 i386)
 
@@ -33,11 +33,37 @@ All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD`
 
 ### Environment variables
 
- - TRAC_USER: user to trac projects.
- - TRAC_PASSWORD: password to trac projects.
+ - `TRAC_USER`: user to trac projects.
+ - `TRAC_PASSWORD`: password to trac projects.
 
-## Pendings
- - Parametrize Trac config values 
- - Add SVN and Git as repositories
- - Email configuration
- - Add tools to backup trac, export wiki content as PDF, and others
+### Pendings
+
+ - Parametrize Trac config values. 
+ - Add SVN and Git as repositories to Trac.
+ - Email configuration on Trac.
+ - Add tools to backup trac, export wiki content as PDF, and others.
+ 
+## Tor
+
+[Tor](www.torproject.org) is a piece of software that enable to us an anonymous communication.
+
+This project enable the possibility to create a Tor service (.onion site) and consists about two services:
+ - `tor-service`: provides the access to the network.
+ - `tor-site`: based on nginx, this is where our resources will be placed for delivery.
+
+To retrieve onion address: 
+```bash
+$ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
+```  
+
+### Arguments
+
+- Tor service
+  - `TOR_VERSION`: Tor version to use (default `0.3.3.9`).
+  - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
+  - `HIDDEN_SERVICE_VERSION`: Onion address version to be generated (default `3`).
+  - `TOR_SITE_URI`: URI whwew Tor serivice content is located (default `tor-site:80`)
+  
+### Pendings
+
+ - Improve security, isolation, anonymity, availability and limit available resources.
