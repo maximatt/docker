@@ -47,10 +47,7 @@ All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD`
 
 [Tor](www.torproject.org) is a piece of software that enable to us an anonymous communication.
 
-This project enable the possibility to create a Tor service (.onion site) and consists about two services:
- - `tor-service`: provides the access to the network.
- - `tor-site`: based on nginx, this is where our resources will be placed for delivery.
-
+This project enable the possibility to create a Tor service (.onion site).
 To retrieve onion address: 
 ```bash
 $ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
@@ -62,7 +59,7 @@ $ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
   - `TOR_VERSION`: Tor version to use (default `0.3.3.9`).
   - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
   - `HIDDEN_SERVICE_VERSION`: Onion address version to be generated (default `3`).
-  - `TOR_SITE_URI`: URI whwew Tor serivice content is located (default `tor-site:80`)
+  - `TOR_SITE_URI`: URI where Tor service content is located (default `tor-site:80`)
   
 ### Pendings
 
