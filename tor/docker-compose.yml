@@ -5,7 +5,6 @@ services:
     tor-service:
         build:
             context: .
-            dockerfile: service.docker
             args:
               - TOR_VERSION=0.3.3.9
               - HIDDEN_SERVICE_PORT=80
