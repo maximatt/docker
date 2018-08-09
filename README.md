@@ -41,7 +41,7 @@ All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD`
  - Parametrize Trac config values. 
  - Add SVN and Git as repositories to Trac.
  - Email configuration on Trac.
- - Add tools to backup trac, export wiki content as PDF, and others.
+ - Add scripts to backup/restore, export wiki content as PDF/HTML, and others.
  
 ## Tor
 
