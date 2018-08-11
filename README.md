@@ -55,7 +55,7 @@ Project to setup a Git server
    ```  
  - Clone repository
    ```bash
-   $ git clone http://maximatt:maximatt@172.30.0.101/git/test.git
+   $ git clone http://guser:gpass@172.30.0.101/git/test.git
    ```
  - Delete repository
    ```bash
