@@ -7,17 +7,17 @@ Base image for other projects based on CentOS 7.
 
 ## Base i386
 
-Build a docker base image from scratch (based on Centos 7 i386)
+Build a docker base image from scratch (based on CentOS 7 i386)
 
 There are two scripts:
- - `mkImageYum.sh`: to be used under hosts with Yum package manager.
- - `mkImageDNF.sh`: to be used under hosts with DNF package manager.
+ - [mkImageYum.sh](https://github.com/maximatt/docker/blob/master/base_i386/mkImageYum.sh): to be used under hosts with Yum package manager.
+ - [mkImageDNF.sh](https://github.com/maximatt/docker/blob/master/base_i386/mkImageDNF.sh): to be used under hosts with DNF package manager.
  
 ## HTTP-Front
 
 Frontend based on HTTP Apache server.
 
-Proxy definitions on `httpd/config/proxy.conf`.
+Proxy definitions on [proxy.conf](https://github.com/maximatt/docker/blob/master/httpd/config/proxy.conf).
 
 ## Trac
 
@@ -31,18 +31,37 @@ Empty folders, are considerated as Trac project to create and they are created w
 
 All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD` (environment variables).
 
-### Environment variables
+### Parameters
 
- - `TRAC_USER`: user to trac projects.
- - `TRAC_PASSWORD`: password to trac projects.
+- Arguments
+  - TRAC_PORT: Port where Trac is listening (default `5002`)
+  
+- Environment variables
+  - `TRAC_USER`: user to trac projects.
+  - `TRAC_PASSWORD`: password to trac projects.
 
 ### Pendings
 
- - Parametrize Trac config values. 
  - Add SVN and Git as repositories to Trac.
  - Email configuration on Trac.
  - Add scripts to backup/restore, export wiki content as PDF/HTML, and others.
- 
+
+## Git
+
+Project to setup a Git server
+
+### Parameters
+
+- Arguments
+  - GIT_SERVER: server name for git server
+  - GIT_PORT: listening port for git server 
+  
+- Environment variables
+  - GIT_USER: git user used to authenticate against repositories under the server
+  - GIT_PASS: password for the git user name
+  - GIT_NAME: git user name for the git user 
+  - GIT_EMAIL: git user email fot the git user
+
 ## Tor
 
 [Tor](www.torproject.org) is a piece of software that enable to us an anonymous communication.
@@ -53,9 +72,9 @@ To retrieve onion address:
 $ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
 ```  
 
-### Arguments
+### Parameters
 
-- Tor service
+- Arguments
   - `TOR_VERSION`: Tor version to use (default `0.3.3.9`).
   - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
   - `HIDDEN_SERVICE_VERSION`: Onion address version to be generated (default `3`).

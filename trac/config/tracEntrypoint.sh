@@ -10,15 +10,14 @@
 #
 
 set -e
-
-HOME_TRAC="/home/trac"
-TRAC_CREDENTIAL_FILE="$HOME_TRAC/trac.htpasswd"
-
 nocolor='\e[0m'; red='\e[0;31m'; green='\e[0;32m'; bold='\e[1m'; cyan='\e[0;36m'; yellow='\e[0;33m'; blue='\e[0;34m'
 
+HOME_TRAC="/home/trac"
+TRAC_CREDENTIAL_FILE="$HOME_TRAC/.trac.htpasswd"
+
 createTracCredentials(){
-    if [ -f $TRAC_CREDENTIAL_FILEFILE ]; then
-        htpasswd -bc $TRAC_CREDENTIAL_FILE $TRAC_USER $TRAC_PASSWORD > /dev/null 2>&1
+    if [ ! -f $TRAC_CREDENTIAL_FILE ]; then
+        htpasswd -bc $TRAC_CREDENTIAL_FILE $TRAC_USER $TRAC_PASS > /dev/null 2>&1
     fi
 }
 
@@ -27,7 +26,7 @@ configPython(){
 }
 
 configHTTP(){
-    sed -i 's/^Listen .*/Listen 5002/g' /etc/httpd/conf/httpd.conf
+    sed -i 's/^Listen .*/Listen '"$TRAC_PORT"'/g' /etc/httpd/conf/httpd.conf
     chown -R apache:apache $HOME_TRAC
     chmod -R 775 $HOME_TRAC
     chcon -R -t httpd_sys_content_t $HOME_TRAC

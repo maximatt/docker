@@ -7,8 +7,6 @@ services:
         image: base:1.0
         hostname: base.maximatt.org
         container_name: base
-        security_opt:
-            - seccomp:unconfined
         networks:
             maximatt-net:
                 ipv4_address: 172.28.0.100
@@ -24,8 +22,6 @@ services:
         image: httpd-front:1.0
         hostname: httpd-front.maximatt.org
         container_name: httpd-front
-        security_opt:
-            - seccomp:unconfined
         ports:
             - 80:80
         networks:
@@ -45,11 +41,11 @@ services:
     trac:
         build:
             context: ./trac
+            args:
+              - TRAC_PORT=5002
         image: trac:1.0
         hostname: trac.maximatt.org
         container_name: trac
-        security_opt:
-            - seccomp:unconfined
         ports:
             - 5002:80
         networks:
@@ -63,8 +59,34 @@ services:
             - ./trac/repository:/home/trac/repository
         environment:
             TRAC_USER: tuser
-            TRAC_PASSWORD: tpass
+            TRAC_PASS: tpass
 
+    git:
+        build:
+            context: ./git
+            args:
+              - GIT_SERVER=git.maximatt.org
+              - GIT_PORT=5003
+        hostname: git.maximatt.org
+        container_name: git
+        image: git:1.0
+        ports:
+            - 5003:80
+        networks:
+            maximatt-net:
+                ipv4_address: 172.28.0.103
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./git/repository:/home/git
+        environment:
+            GIT_USER: guser
+            GIT_PASS: gpass
+            GIT_NAME: maximatt
+            GIT_EMAIL: azamax@gmail.com
+            
 networks:
   maximatt-net:
     ipam:
