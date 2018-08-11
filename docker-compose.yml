@@ -29,8 +29,10 @@ services:
                 ipv4_address: 172.28.0.101
         depends_on:
             - trac
+            - git
         links:
             - "trac:trac.maximatt.org"
+            - "git:git.maximatt.org"
         tmpfs:
             - /run
             - /tmp
