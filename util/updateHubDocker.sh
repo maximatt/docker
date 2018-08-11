@@ -7,7 +7,7 @@
 #   Script to update images at hub.docker
 #
 # Usage:
-#   $ sh updateHubDocker.sh
+#   updateHubDocker.sh { update | add <NEW_IMAGE> }"
 #
 ################################################################################
 tabs 4
@@ -64,21 +64,47 @@ pushImage(){
     docker push $HUB_DOCKER_USER/$image:$2
 }
 
+update(){
+    for hub_image in "${HUB_IMAGES_REV[@]}"; do
+        deleteLocally $hub_image
+    done
+
+    for hub_image in "${HUB_IMAGES[@]}"; do
+        if [ -z "${hub_image##*centos7_i386*}" ]; then
+            continue # centos7_i386 is built from scratch
+        fi
+        buildImage $hub_image
+        pushImage $hub_image "1.0"
+        pushImage $hub_image "latest"
+        docker rmi "$hub_image:1.0"
+        docker rmi "${hub_image/maximatt\//}:latest"
+    done
+}
+
+add(){
+    # $1: new_image
+    docker-compose -f ${DOCKER_FILES['default']} build $1
+    pushImage $1 "1.0"
+    pushImage $1 "latest"
+    docker rmi "$HUB_DOCKER_USER/$1:1.0"
+    docker rmi "$1:latest"
+}
+
 ########
 # MAIN #
 ########
 
-for hub_image in "${HUB_IMAGES_REV[@]}"; do
-    deleteLocally $hub_image
-done
+case "$1" in
+update)
+    update
+    ;;
+add)
+    add $2
+    ;;
+*)
+    echo "Usage: updateHubDocker.sh { update | add <IMAGE_NAME> }"
+    exit 1
+    ;;
+esac
 
-for hub_image in "${HUB_IMAGES[@]}"; do
-    if [ -z "${hub_image##*centos7_i386*}" ]; then
-        continue # centos7_i386 is built from scratch
-    fi
-    buildImage $hub_image
-    pushImage $hub_image "1.0"
-    pushImage $hub_image "latest"
-    docker rmi "$hub_image:1.0"
-    docker rmi "${hub_image/maximatt\//}:latest"
-done
+exit 0
