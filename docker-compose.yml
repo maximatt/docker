@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-    base:
+    centos7-base:
         build:
             context: ./base
-        image: base:1.0
+        image: centos7-base
         hostname: base.maximatt.org
-        container_name: base
+        container_name: centos7-base
         networks:
             maximatt-net:
                 ipv4_address: 172.28.0.100
@@ -19,7 +19,7 @@ services:
     httpd-front:
         build:
             context: ./httpd
-        image: httpd-front:1.0
+        image: httpd-front
         hostname: httpd-front.maximatt.org
         container_name: httpd-front
         ports:
@@ -45,7 +45,7 @@ services:
             context: ./trac
             args:
               - TRAC_PORT=5002
-        image: trac:1.0
+        image: trac
         hostname: trac.maximatt.org
         container_name: trac
         ports:
@@ -71,7 +71,7 @@ services:
               - GIT_PORT=5003
         hostname: git.maximatt.org
         container_name: git
-        image: git:1.0
+        image: git
         ports:
             - 5003:80
         networks:

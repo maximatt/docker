@@ -1,4 +1,5 @@
-FROM maximatt/httpd-front:1.0
+FROM maximatt/httpd-front
+LABEL maintainer="azamax@gmail.com"
 
 ARG GIT_PORT="5003"
 ARG GIT_SERVER="git.maximatt.org"

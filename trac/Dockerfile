@@ -1,5 +1,4 @@
-FROM maximatt/httpd-front:1.0
-ENV container docker
+FROM maximatt/httpd-front
 LABEL maintainer="azamax@gmail.com"
 
 ARG TRAC_PORT=5002
@@ -17,7 +16,7 @@ RUN chmod 755 /usr/local/bin/entrypoint.sh; \
     pip install --upgrade pip; \
     pip install -U xhtml2pdf==0.2b1; \
     pip install Pygments textile pillow TracXMLRPC svn+https://trac-hacks.org/svn/tracwysiwygplugin/0.12; \
-    yum clean all; rm -rf /var/cache/yum; 
+    yum clean all; rm -rf /var/cache/yum
 
 EXPOSE ${TRAC_PORT}
 

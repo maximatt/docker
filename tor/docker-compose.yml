@@ -10,7 +10,7 @@ services:
               - HIDDEN_SERVICE_PORT=80
               - HIDDEN_SERVICE_VERSION=3
               - TOR_SITE_URI=tor-site:80
-        image: tor-service:1.0
+        image: tor-service
         hostname: tor.service.anonymous.org
         container_name: tor-service
         networks:

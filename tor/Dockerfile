@@ -1,4 +1,4 @@
-FROM maximatt/centos7-base:1.0
+FROM maximatt/centos7-base
 LABEL maintainer="azamax@gmail.com"
 
 ARG TOR_VERSION="0.3.3.9"
