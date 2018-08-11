@@ -53,7 +53,7 @@ Project to setup a Git server
    ```bash
    $ docker exec -it $(docker ps | grep git | awk "{print \$1}") /bin/bash -c "git.sh create test"
    ```  
- - Checkout repository
+ - Clone repository
    ```bash
    $ git clone http://maximatt:maximatt@172.30.0.101/git/test.git
    ```
