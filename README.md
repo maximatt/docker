@@ -31,17 +31,14 @@ Empty folders, are considerated as Trac project to create and they are created w
 
 All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD` (environment variables).
 
-### Parameters
+### Access Trac repositories
+ - [Trac](http://172.30.0.101/trac/)
 
-- Arguments
-  - TRAC_PORT: Port where Trac is listening (default `5002`)
-  
-- Environment variables
+### Parameters
   - `TRAC_USER`: user to trac projects.
   - `TRAC_PASSWORD`: password to trac projects.
 
 ### Pendings
-
  - Add SVN and Git as repositories to Trac.
  - Email configuration on Trac.
  - Add scripts to backup/restore, export wiki content as PDF/HTML, and others.
@@ -50,17 +47,25 @@ All projects are setted to be authenticated with `TRAC_USER` and `TRAC_PASSWORD`
 
 Project to setup a Git server
 
-### Parameters
+### Create and access to repositories
+ - [GitWeb](http://172.30.0.101/gitweb/)
+ - Create repository
+   ```bash
+   $ docker exec -it $(docker ps | grep git | awk "{print \$1}") /bin/bash -c "git.sh create test"
+   ```  
+ - Checkout repository
+   ```bash
+   $ git clone http://maximatt:maximatt@172.30.0.101/git/test.git
+   ```
+ - Delete repository
+   ```bash
+   $ docker exec -it $(docker ps | grep git | awk "{print \$1}") /bin/bash -c "git.sh delete test"
 
-- Arguments
-  - GIT_SERVER: server name for git server
-  - GIT_PORT: listening port for git server 
-  
-- Environment variables
-  - GIT_USER: git user used to authenticate against repositories under the server
-  - GIT_PASS: password for the git user name
-  - GIT_NAME: git user name for the git user 
-  - GIT_EMAIL: git user email fot the git user
+### Parameters
+  - `GIT_USER`: git user used to authenticate against repositories under the server
+  - `GIT_PASS`: password for the git user name
+  - `GIT_NAME`: git user name for the git user 
+  - `GIT_EMAIL`: git user email fot the git user
 
 ## Tor
 
@@ -70,16 +75,15 @@ This project enable the possibility to create a Tor service (.onion site).
 To retrieve onion address: 
 ```bash
 $ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
-```  
+```
 
 ### Parameters
-
 - Arguments
   - `TOR_VERSION`: Tor version to use (default `0.3.3.9`).
   - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
   - `HIDDEN_SERVICE_VERSION`: Onion address version to be generated (default `3`).
   - `TOR_SITE_URI`: URI where Tor service content is located (default `tor-site:80`)
-  
+
 ### Pendings
 
  - Improve security, isolation, anonymity, availability and limit available resources.
