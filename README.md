@@ -74,7 +74,7 @@ Project to setup a Git server
 This project enable the possibility to create a Tor service (.onion site).
 To retrieve onion address: 
 ```bash
-$ docker-compose exec tor-service /bin/bash -c 'cat ./hidden_service/hostname'
+$ docker-compose exec $(docker ps | grep tor-service | awk "{print \$1}") /bin/bash -c 'cat ./hidden_service/hostname'
 ```
 
 ### Parameters
