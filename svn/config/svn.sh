@@ -63,7 +63,7 @@ populate_new_svn_repo(){
     cd $1
     touch README.md
     svn add README.md
-    svn commit -m 'initial commit' --username maximatt --password maximatt --no-auth-cache
+    svn commit -m 'initial commit' --username $SVN_USER --password $SVN_PASS --no-auth-cache
     
     cd $HOME_SVN
     rm -fr $HOME_SVN/tmp
