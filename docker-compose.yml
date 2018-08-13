@@ -59,6 +59,24 @@ services:
             GIT_PASS: gpass
             GIT_NAME: maximatt
             GIT_EMAIL: azamax@gmail.com
+
+    svn:
+        image: maximatt/svn
+        hostname: svn.maximatt.org
+        ports:
+            - 5004:80
+        networks:
+            maximattNet:
+                ipv4_address: 172.30.0.104
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./svn-repository:/home/svn
+        environment:
+            SVN_USER: suser
+            SVN_PASS: spass
             
 networks:
   maximattNet:

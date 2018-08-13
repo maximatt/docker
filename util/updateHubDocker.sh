@@ -19,8 +19,8 @@ HUB_IMAGES=(`docker search $HUB_DOCKER_USER | grep $HUB_DOCKER_USER | cut -d' ' 
 HUB_IMAGES_REV=(`tac -s" " <<< "${HUB_IMAGES[@]} "`)
 
 declare -A DOCKER_FILES=(
-    [default]="../docker-compose.yml"
-    [tor-service]="../tor/docker-compose.yml"
+    [default]="../docker-compose-dev.yml"
+    [tor-service]="../tor/docker-compose-dev.yml"
 )
 
 deleteLocally(){

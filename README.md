@@ -61,12 +61,28 @@ Project to setup a Git server
    ```bash
    $ docker exec -it $(docker ps | grep git | awk "{print \$1}") /bin/bash -c "git.sh delete test"
 
-### Parameters
-  - `GIT_USER`: git user used to authenticate against repositories under the server
-  - `GIT_PASS`: password for the git user name
-  - `GIT_NAME`: git user name for the git user 
-  - `GIT_EMAIL`: git user email fot the git user
+## SVN
 
+Project to setup a SVN server
+
+### Create and access to repositories
+ - [SVN](http://172.30.0.101/svn/)
+ - Create repository
+   ```bash
+   $ docker exec -it $(docker ps | grep svn | awk "{print \$1}") /bin/bash -c "svn.sh create test"
+   ```  
+ - Checkout repository
+   ```bash
+   $ svn co http://172.30.0.101/svn/test test
+   ```
+ - Delete repository
+   ```bash
+   $ docker exec -it $(docker ps | grep svn | awk "{print \$1}") /bin/bash -c "svn.sh delete test"   
+
+### Parameters
+  - `SVN_USER`: svn user used to authenticate against repositories under the server
+  - `SVN_PASS`: password for the svn user name
+  
 ## Tor
 
 [Tor](www.torproject.org) is a piece of software that enable to us an anonymous communication.
