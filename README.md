@@ -13,6 +13,12 @@ There are two scripts:
  - [mkImageYum.sh](https://github.com/maximatt/docker/blob/master/base_i386/mkImageYum.sh): to be used under hosts with Yum package manager.
  - [mkImageDNF.sh](https://github.com/maximatt/docker/blob/master/base_i386/mkImageDNF.sh): to be used under hosts with DNF package manager.
  
+Build and run using [Dockerfile](https://github.com/maximatt/docker/blob/master/base_i386/Dockerfile) 
+```bash
+$ docker build --rm -t centos7/i386:1.0 -f $(pwd -P)/Dockerfile .
+$ docker run --name centos7_i386  --rm -ti  -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /tmp -v /run centos7/i386:1.0
+```
+ 
 ## HTTP-Front
 
 Frontend based on HTTP Apache server.
@@ -60,6 +66,7 @@ Project to setup a Git server
  - Delete repository
    ```bash
    $ docker exec -it $(docker ps | grep git | awk "{print \$1}") /bin/bash -c "git.sh delete test"
+   ```
 
 ## SVN
 
@@ -77,7 +84,8 @@ Project to setup a SVN server
    ```
  - Delete repository
    ```bash
-   $ docker exec -it $(docker ps | grep svn | awk "{print \$1}") /bin/bash -c "svn.sh delete test"   
+   $ docker exec -it $(docker ps | grep svn | awk "{print \$1}") /bin/bash -c "svn.sh delete test"
+   ```
 
 ### Parameters
   - `SVN_USER`: svn user used to authenticate against repositories under the server
