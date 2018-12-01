@@ -1,7 +1,7 @@
 FROM maximatt/centos7-base
 LABEL maintainer="azamax@gmail.com"
 
-ARG TOR_VERSION="0.3.3.9"
+ARG TOR_VERSION="0.3.3.10"
 ARG HIDDEN_SERVICE_PORT="80"
 ARG HIDDEN_SERVICE_VERSION="3"
 ARG TOR_SITE_URI="tor-site:80"
@@ -10,8 +10,7 @@ WORKDIR /home/tor
 ADD https://www.torproject.org/dist/tor-${TOR_VERSION}.tar.gz tor-${TOR_VERSION}.tar.gz
 ADD https://bootstrap.pypa.io/get-pip.py get-pip.py
 
-RUN yum update -y; \
-    yum install -y libevent-devel openssl-devel zlib-devel; \
+RUN yum install -y libevent-devel openssl-devel zlib-devel; \
     python get-pip.py; pip install nyx; \
     yum install -y gcc make
 

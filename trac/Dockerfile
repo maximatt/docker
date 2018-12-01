@@ -11,7 +11,6 @@ ADD ./config/trac.conf /etc/httpd/conf.d/trac.conf
 ADD ./config/tracEntrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod 755 /usr/local/bin/entrypoint.sh; \
-    yum -y update; \
     yum -y install mod_wsgi trac python2-pip htmldoc subversion; \
     pip install --upgrade pip; \
     pip install -U xhtml2pdf==0.2b1; \

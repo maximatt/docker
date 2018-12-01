@@ -13,7 +13,6 @@ ADD ./config/svn.conf /etc/httpd/conf.d/svn.conf
 ADD ./config/svn.sh /usr/local/bin/svn.sh
 
 RUN chmod 755 /usr/local/bin/svn.sh; \
-    yum -y update; \
     yum -y install mod_dav_svn subversion; \
     yum clean all; rm -rf /var/cache/yum; 
 

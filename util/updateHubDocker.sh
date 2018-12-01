@@ -65,6 +65,7 @@ pushImage(){
 }
 
 update(){
+#   docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
     for hub_image in "${HUB_IMAGES_REV[@]}"; do
         deleteLocally $hub_image
     done
@@ -95,14 +96,14 @@ add(){
 ########
 
 case "$1" in
-update)
+all)
     update
     ;;
 add)
     add $2
     ;;
 *)
-    echo "Usage: updateHubDocker.sh { update | add <IMAGE_NAME> }"
+    echo "Usage: updateHubDocker.sh { all | add <IMAGE_NAME> }"
     exit 1
     ;;
 esac

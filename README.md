@@ -103,7 +103,7 @@ $ docker exec $(docker ps | grep tor-service | awk "{print \$1}") /bin/bash -c '
 
 ### Parameters
 - Arguments
-  - `TOR_VERSION`: Tor version to use (default `0.3.3.9`).
+  - `TOR_VERSION`: Tor version to use (default `0.3.3.10`).
   - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
   - `HIDDEN_SERVICE_VERSION`: Onion address version to be generated (default `3`).
   - `TOR_SITE_URI`: URI where Tor service content is located (default `tor-site:80`)
