@@ -111,3 +111,26 @@ $ docker exec $(docker ps | grep tor-service | awk "{print \$1}") /bin/bash -c '
 ### Pendings
 
  - Improve security, isolation, anonymity, availability and limit available resources.
+
+## Registry
+
+  - Certificate configuration
+    ```bash
+    $ sudo mkdir -p /etc/docker/certs.d/172.28.0.107:443
+    $ sudo cp ./certs/cert.crt /etc/docker/certs.d/172.28.0.107:443/ca.crt
+    ```
+  - Setting user and password
+    ```bash
+    $ mkdir auth
+    $ docker run --entrypoint htpasswd registry -Bbn testuser testpassword > auth/htpasswd
+    ```
+  - Test
+    ```bash
+    $ docker login -u testuser 172.28.0.107:443
+    $ docker image tag centos:7 172.28.0.107:443/centos:7
+    $ docker push 172.28.0.107:443/centos:7
+    $ docker pull 172.28.0.107:443/centos:7
+    $ curl -u testuser:testpassword -X GET --insecure https://172.28.0.107/v2/centos/tags/list | jq .
+    ```
+
+

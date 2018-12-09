@@ -78,6 +78,34 @@ services:
             SVN_USER: suser
             SVN_PASS: spass
             
+    registry:
+        hostname: registry.maximatt.org
+        container_name: registry
+        image: registry
+        environment:  
+            REGISTRY_HTTP_ADDR: "172.28.0.105:443"
+            REGISTRY_HTTP_SECRET: secret
+            REGISTRY_HTTP_TLS_CERTIFICATE: /certs/cert.crt
+            REGISTRY_HTTP_TLS_KEY: /certs/cert.key
+            REGISTRY_AUTH: htpasswd
+            REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+            REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd 
+        ports:
+            - 443:443
+        networks:
+            maximatt-dev:
+                ipv4_address: 172.28.0.105
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - registry-data:/var/lib/registry
+            - ./registry/certs:/certs
+            - ./registry/auth:/auth
+
+volumes:
+  registry-data:
+  
 networks:
   maximattNet:
     ipam:
