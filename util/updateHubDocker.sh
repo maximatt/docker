@@ -7,7 +7,7 @@
 #   Script to update images at hub.docker
 #
 # Usage:
-#   updateHubDocker.sh { update | add <NEW_IMAGE> }"
+#   updateHubDocker.sh { all | add <NEW_IMAGE> }"
 #
 ################################################################################
 tabs 4
