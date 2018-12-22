@@ -132,5 +132,3 @@ $ docker exec $(docker ps | grep tor-service | awk "{print \$1}") /bin/bash -c '
     $ docker pull 172.28.0.107:443/centos:7
     $ curl -u testuser:testpassword -X GET --insecure https://172.28.0.107/v2/centos/tags/list | jq .
     ```
-
-
