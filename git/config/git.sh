@@ -35,36 +35,32 @@ HOME_GIT="/home/git"
 CREDENTIAL_FILE="$HOME_GIT/.git.htpasswd"
 
 entrypoint(){
+    printf "$green Git entrypoint $nocolor\n"
     if [ ! -f $CREDENTIAL_FILE ]; then
         htpasswd -bc $CREDENTIAL_FILE $GIT_USER $GIT_PASS > /dev/null 2>&1
     fi
-    
+
     git config --global user.name  $GIT_NAME
     git config --global user.email $GIT_EMAIL
     git config --global gitweb.owner $GIT_NAME
-    
-    sed -i 's/^Listen .*/Listen '"${GIT_PORT}"'/g' /etc/httpd/conf/httpd.conf; \
-    sed -i 's/^<VirtualHost .*/<VirtualHost *:'"${GIT_PORT}"'>/g' /etc/httpd/conf.d/git.conf; \
-    sed -i 's/ServerName .*/ServerName '"${GIT_SERVER}"'/g' /etc/httpd/conf.d/git.conf; \
-    sed -i 's/ServerAdmin .*/ServerAdmin '"${GIT_EMAIL}"'/g' /etc/httpd/conf.d/git.conf; \
-    sed -i "s/^#our \$projectroot .*/our \$projectroot = '\/home\/git';/g" /etc/gitweb.conf; \
-    sed -i "s/^#\$feature{'blame'}{'default'} = \[1\];/\$feature{'blame'}{'default'} = \[1\];/g" /etc/gitweb.conf ; \
-    sed -i "s/^#\$feature{'snapshot'}{'default'} = \[\];/\$feature{'snapshot'}{'default'} = \[\];/g" /etc/gitweb.conf; \
-    sed -i "s/^#\$feature{'grep'}{'default'} = \[0\];/\$feature{'grep'}{'default'} = \[0\];/g" /etc/gitweb.conf; \
+
+    sed -i "s/^\$projectroot = .*/\$projectroot = '\/home\/git';/g" /etc/gitweb.conf
+
+    echo "\$feature{'blame'}{'default'} = [1];" >> /etc/gitweb.conf 
+    echo "\$feature{'snapshot'}{'default'} = [];" >> /etc/gitweb.conf
+    echo "\$feature{'grep'}{'default'} = [0];" >> /etc/gitweb.conf
     echo "\$feature{'highlight'}{'default'} = [1];" >>/etc/gitweb.conf;
     echo "\$git_temp = '/tmp';" >>/etc/gitweb.conf;
     echo "\$projects_list =  \$projectroot;" >>/etc/gitweb.conf;
 
     assignPermission $HOME_GIT
-    
-    exec /usr/sbin/init
+
+    exec /lib/systemd/systemd
 }
 
 assignPermission(){
-    chown -R apache:apache $1
+    chown -R www-data:www-data $1
     chmod -R 775 $1
-    chcon -R -t httpd_sys_content_t $1
-    chcon -R -t httpd_sys_content_rw_t $1
 }
 
 create_new_git_repo(){
@@ -76,18 +72,18 @@ create_new_git_repo(){
     mv hooks/post-update.sample hooks/post-update
     chmod +x $HOME_GIT/$1.git/hooks/post-update
     git update-server-info  
-    
+
     assignPermission $HOME_GIT
 }
 
 populate_new_git_repo(){
     # $1= REPO_NAME
     printf "$green Populating $1 git repository $nocolor\n"
-    
+
     mkdir -p $HOME_GIT/tmp
     cd $HOME_GIT/tmp
     git init  --quiet
-    
+
     touch README.md 
     git add README.md
     git commit -m 'initial commit' 
@@ -124,5 +120,3 @@ delete)
 esac
 
 exit 0
-
-

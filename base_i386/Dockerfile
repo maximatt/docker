@@ -1,4 +1,4 @@
 FROM scratch
-ADD centos7.tar.xz /
+ADD debian10.tar.xz /
 
 CMD ["/bin/bash"]
