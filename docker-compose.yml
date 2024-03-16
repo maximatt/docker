@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    debian10-base:
+        build:
+            context: ./base
+        image: debian10-base
+        hostname: base.maximatt.org
+        container_name: debian10-base
+        networks:
+            test_net:
+                ipv4_address: 172.72.0.100
+        tmpfs:
+            - /run
+            - /run/lock
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+networks:
+  test_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.72.0.0/24
