@@ -16,6 +16,33 @@ services:
             - /tmp
         volumes:
             - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            
+    git:
+        build:
+            context: ./git
+            args:
+              - GIT_SERVER=git.maximatt.org
+              - GIT_PORT=5001
+        hostname: git.maximatt.org
+        container_name: git
+        image: git
+        ports:
+            - 5001:80
+        networks:
+            test_net:
+                ipv4_address: 172.72.0.101
+        tmpfs:
+            - /run
+            - /run/lock
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./git/repository:/home/git
+        environment:
+            GIT_USER: guser
+            GIT_PASS: gpass
+            GIT_NAME: maximatt
+            GIT_EMAIL: azamax@gmail.com
 
 networks:
   test_net:
