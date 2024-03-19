@@ -23,6 +23,7 @@ services:
             args:
               - GIT_SERVER=git.maximatt.org
               - GIT_PORT=5001
+              - SERVER_ADMIN=azamax@gmail.com
         hostname: git.maximatt.org
         container_name: git
         image: git
@@ -43,6 +44,31 @@ services:
             GIT_PASS: gpass
             GIT_NAME: maximatt
             GIT_EMAIL: azamax@gmail.com
+            
+    trac:
+        build:
+            context: ./trac
+            args:
+              - SERVER_ADMIN=azamax@gmail.com
+              - TRAC_PORT=5002
+        hostname: trac.maximatt.org
+        container_name: trac
+        image: trac
+        ports:
+            - 5002:80
+        networks:
+            test_net:
+                ipv4_address: 172.72.0.102
+        tmpfs:
+            - /run
+            - /run/lock
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+            - ./trac/repository:/home/trac/repository
+        environment:
+            TRAC_USER: tuser
+            TRAC_PASS: tpass
 
 networks:
   test_net:
