@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+    tor-service:
+        build:
+            context: .
+            args:
+              - TOR_VERSION=0.4.8.10
+        image: tor-service
+        hostname: tor.service.anonymous.org
+        networks:
+            tor-net:
+                ipv4_address: 172.172.0.171
+        ports:
+            - 80:80
+        depends_on:
+            - tor-site
+        links:
+            - tor-site
+        tmpfs:
+            - /run
+            - /tmp
+        volumes:
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
+    tor-site:
+        image: nginx
+        networks:
+            tor-net:
+                ipv4_address: 172.172.0.172
+        ports:
+          - 8080:80
+
+networks:
+  tor-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.172.0.0/24

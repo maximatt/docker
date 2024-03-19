@@ -63,3 +63,19 @@ $ docker exec -it $(docker ps | grep "trac " | awk "{print \$1}") /bin/bash -c "
  - Add Git as repositorys to Trac.
  - Email configuration on Trac.
  - Add scripts to backup/restore, export wiki content as PDF/HTML.
+
+## Tor
+
+[Tor](www.torproject.org) is a piece of software that enable to us an anonymous communication.
+
+To retrieve onion address: 
+```bash
+$ docker exec $(docker ps | grep tor-service | awk "{print \$1}") /bin/bash -c 'cat ./hidden_service/hostname'
+```
+
+### Parameters
+- Arguments
+  - `TOR_VERSION`: Tor version.
+  - `HIDDEN_SERVICE_PORT` Tor service port (default `80`).
+  - `HIDDEN_SERVICE_VERSION`: Version of the onion address to be generated (default `3`).
+  - `TOR_SITE_URI`: URI where Tor service content is located (default `tor-site:80`)
